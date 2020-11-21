@@ -1,4 +1,4 @@
-
+'use strict';
 console.log('Package: vector.js');
 
 class vector3 {

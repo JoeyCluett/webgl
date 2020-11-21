@@ -1,4 +1,4 @@
-
+'use strict';
 console.log('Package: matrix.js');
 
 class mat4x4 {
@@ -10,6 +10,16 @@ class mat4x4 {
             [  0.0,  0.0, diag,  0.0 ],
             [  0.0,  0.0,  0.0, diag ]
         ];
+    }
+
+    to_array() {
+        // need a regular array for uploading to OpenGL
+        return new Float32Array([
+            this.data[0][0], this.data[0][1], this.data[0][2], this.data[0][3],
+            this.data[1][0], this.data[1][1], this.data[1][2], this.data[1][3],
+            this.data[2][0], this.data[2][1], this.data[2][2], this.data[2][3],
+            this.data[3][0], this.data[3][1], this.data[3][2], this.data[3][3]
+        ]);
     }
 
     get_at(y, x) { return this.data[y][x]; }
@@ -80,9 +90,9 @@ class mat4x4 {
 };
 
 function mat4x4_diagonal(val) {
-    return mat4x4(val);
+    return new mat4x4(val);
 }
 
 function mat4x4_identity() {
-    return mat4x4(1.0);
+    return new mat4x4(1.0);
 }

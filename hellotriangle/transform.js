@@ -1,5 +1,33 @@
-
+'use strict';
 console.log('Package: transform.js');
+
+function radians(_degrees) {
+    return Math.PI * _degrees / 180.0;
+}
+
+function degrees(_radians) {
+    return 180.0 * _radians / Math.PI;
+}
+
+// assume [0.0, 1.0]
+function perspectiveRH(field_of_view, aspect_ratio, near_clip, far_clip) {
+
+    const tanHalfFov = Math.tan( field_of_view / 2.0 );
+
+    var R = new mat4x4(0.0);
+
+    R.data[0][0] = 1.0 / (aspect_ratio * tanHalfFov);
+    R.data[1][1] = 1.0 / tanHalfFov;
+    R.data[2][2] = far_clip / ( near_clip - far_clip );
+    R.data[2][3] = -1.0;
+    R.data[3][2] = -(far_clip * near_clip) / (far_clip - near_clip);
+
+    return R;
+}
+
+function perspective(field_of_view, aspect_ratio, near_clip, far_clip) {
+    return perspectiveRH(field_of_view, aspect_ratio, near_clip, far_clip);
+}
 
 function normalize(v3) {
 
@@ -32,7 +60,7 @@ function lookAtRH(eye, center, up) {
     const s = normalize(cross( f, up ));
     const u = cross( s, f );
 
-    R = new mat4x4(1.0);
+    var R = new mat4x4(1.0);
 
     R.data[0][0] = s.x();
     R.data[1][0] = s.y();

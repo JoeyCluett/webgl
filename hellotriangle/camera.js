@@ -1,4 +1,4 @@
-
+'use strict';
 console.log('Package: camera.js');
 
 class Camera {
@@ -67,6 +67,8 @@ class Camera {
             this.position.y( clamp(this.max_bounds.y(), this.min_bounds.y(), this.position.y()) );
             this.position.z( clamp(this.max_bounds.z(), this.min_bounds.z(), this.position.z()) );
         }
+
+
     }
 
     get_transform() {

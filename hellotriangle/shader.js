@@ -1,4 +1,4 @@
-
+'use strict';
 console.log('Package: shader.js');
 
 
@@ -20,6 +20,8 @@ function load_shader(gl, shader_type, shader_source) {
 class Shader {
     constructor(gl, vertex_source, fragment_source) {
 
+        this.gl = gl;
+
         const vertex_shader   = load_shader(gl, gl.VERTEX_SHADER,   vertex_source);
         const fragment_shader = load_shader(gl, gl.FRAGMENT_SHADER, fragment_source);
         const shader_program  = gl.createProgram();
@@ -37,6 +39,16 @@ class Shader {
         this.shader_program  = shader_program;
     }
 
+    get_attrib_location(attrib_name) {
+        this.gl.getAttribLocation( this.shader_program, attrib_name );
+    }
 
+    get_uniform_location(uniform_name) {
+        this.gl.getUniformLocation( this.shader_program, uniform_name );
+    }
+
+    use() {
+        this.gl.useProgram(this.shader_program);
+    }
 
 }
